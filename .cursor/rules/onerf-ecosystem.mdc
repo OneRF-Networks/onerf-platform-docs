@@ -1,0 +1,27 @@
+---
+description: Contexto do ecossistema OneRF — docs centralizadas e links por produto
+alwaysApply: true
+---
+
+# OneRF — ecossistema e documentação
+
+Antes de implementar ou rever código em **qualquer** repo OneRF:
+
+1. **Docs comuns (SSOT):** [onerf-platform-docs/README.md](../../onerf-platform-docs/README.md) — ou path relativo `../../onerf-platform-docs/` no monorepo `git_onerf/`.
+2. **Visão de plataforma:** [platform/PLATFORM_VISION.md](../../onerf-platform-docs/platform/PLATFORM_VISION.md)
+3. **Ecossistema:** [ECOSYSTEM.md](../../onerf-platform-docs/ECOSYSTEM.md)
+
+## Por repositório
+
+| Repo | Docs locais | Índice produto |
+|------|-------------|----------------|
+| `backend` | `docs/README.md`, `context.md` | [products/backend-iot/README.md](../../onerf-platform-docs/products/backend-iot/README.md) |
+| `b2b_analytics` | `docs/ENGINEERING.md` | [products/analytics/README.md](../../onerf-platform-docs/products/analytics/README.md) |
+| Apps `/apps/` | README + ARCHITECTURE.md | [products/vertical-apps/README.md](../../onerf-platform-docs/products/vertical-apps/README.md) |
+
+## Regras
+
+- **Não duplicar** princípios de plataforma nos repos satélite — alterar em `onerf-platform-docs`.
+- Contrato HTTP normativo: [platform/API_CONTRACT.md](../../onerf-platform-docs/platform/API_CONTRACT.md); OpenAPI **vivo** em cada serviço.
+- Integração Backend ↔ Analytics: [platform/INTEGRATION_PATTERNS.md](../../onerf-platform-docs/platform/INTEGRATION_PATTERNS.md) + `backend/docs/INTEGRATION_ANALYTICS.md`.
+- ADR-001: **sem MQTT** inter-sistema — [adr/001-no-mqtt-inter-system.md](../../onerf-platform-docs/adr/001-no-mqtt-inter-system.md).
