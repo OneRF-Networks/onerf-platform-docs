@@ -77,6 +77,8 @@ https://github.com/OneRF-Networks/onerf-platform-docs
 
 https://onerf-networks.github.io/onerf-platform-docs/
 
+**Ativação (admin org):** repositório → Settings → Pages → *Build and deployment* → **GitHub Actions** (workflow `Deploy GitHub Pages`). Se a org bloquear criação de Pages, pedir ao admin da org OneRF para habilitar.
+
 ---
 
 ## Governança
