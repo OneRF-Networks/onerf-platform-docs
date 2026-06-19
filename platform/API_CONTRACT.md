@@ -129,4 +129,4 @@ Rotas legadas podem usar `{ "total", "data" }` até refactor; rotas novas usam `
 
 ---
 
-*Última actualização: jun/2026 — consolidado de PLATFORM_VISION §8.2 e ARCHITECTURE_TARGET §13.*
+*Última actualização: jun/2026 — SSOT transversal; repos mantêm só OpenAPI vivo e notas repo-específicas.*

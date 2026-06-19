@@ -73,6 +73,10 @@ powershell -ExecutionPolicy Bypass -File .\scripts\clone-workspace.ps1 -TargetDi
 
 https://github.com/OneRF-Networks/onerf-platform-docs
 
+### Site (GitHub Pages)
+
+https://onerf-networks.github.io/onerf-platform-docs/
+
 ---
 
 ## Governança

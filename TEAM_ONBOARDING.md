@@ -2,7 +2,8 @@
 
 Guia para novos membros do time: modelo de produto, documentação centralizada e setup do workspace Cursor.
 
-**Repo canónico (SSOT):** https://github.com/OneRF-Networks/onerf-platform-docs
+**Repo canónico (SSOT):** https://github.com/OneRF-Networks/onerf-platform-docs  
+**Site (browse):** https://onerf-networks.github.io/onerf-platform-docs/
 
 ---
 

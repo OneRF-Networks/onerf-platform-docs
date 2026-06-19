@@ -1,6 +1,6 @@
 # Autenticação e autorização — OIDC
 
-Decisão fechada da [OneRF B2B Platform](PLATFORM_VISION.md). Detalhe de implementação: [b2b_analytics/docs/ARCHITECTURE_TARGET.md §8](../../../b2b_analytics/docs/ARCHITECTURE_TARGET.md).
+Decisão fechada da [OneRF B2B Platform](PLATFORM_VISION.md). **Implementação Analytics IoT:** módulo `backend/modules/identity/` — ver [b2b_analytics/docs/REFACTOR_BREAKING.md](../../../b2b_analytics/docs/REFACTOR_BREAKING.md); notas repo-específicas em [ARCHITECTURE_TARGET §8](../../../b2b_analytics/docs/ARCHITECTURE_TARGET.md#8-autenticação-e-autorização--platform).
 
 ---
 
@@ -63,7 +63,7 @@ flowchart TB
 - `POST /token` ou client credentials OIDC → JWT app.
 - Rotas `/api/v1` aceitam `Authorization: Bearer` — fluxo **separado** do login humano.
 
-**Apps verticais (legado):** ver [HUB APPs](../../onerf-platform-docs/products/hub-apps/README.md) — KlabinDash, SinterDash, SolarDash consomem tipicamente JWT M2M com token em `localStorage` — padrão transitório até SSO unificado.
+**Apps verticais (legado):** ver [HUB APPs](../products/hub-apps/README.md) — KlabinDash, SinterDash, SolarDash consomem tipicamente JWT M2M com token em `localStorage` — padrão transitório até SSO unificado.
 
 ---
 

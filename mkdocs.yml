@@ -1,0 +1,69 @@
+site_name: OneRF Platform Docs
+site_url: https://onerf-networks.github.io/onerf-platform-docs/
+repo_url: https://github.com/OneRF-Networks/onerf-platform-docs
+edit_uri: edit/master/
+
+docs_dir: .
+
+exclude_docs: |
+  /scripts/
+  /.cursor/
+  /.github/
+  /onerf.code-workspace
+  /.gitignore
+
+theme:
+  name: material
+  language: pt
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Modo escuro
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Modo claro
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - search.suggest
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Início: README.md
+  - Onboarding: TEAM_ONBOARDING.md
+  - Workspace: WORKSPACE.md
+  - Ecossistema: ECOSYSTEM.md
+  - Plataforma:
+    - Visão: platform/PLATFORM_VISION.md
+    - Contrato API: platform/API_CONTRACT.md
+    - Auth OIDC: platform/AUTH_OIDC.md
+    - UX / Navegação: platform/UI_NAVIGATION.md
+    - Integrações: platform/INTEGRATION_PATTERNS.md
+  - Produtos:
+    - Backend IoT: products/backend-iot/README.md
+    - Analytics IoT: products/analytics/README.md
+    - HUB APPs: products/hub-apps/README.md
+    - Apps verticais: products/vertical-apps/README.md
+  - ADRs:
+    - 001 — Sem MQTT inter-sistema: adr/001-no-mqtt-inter-system.md
