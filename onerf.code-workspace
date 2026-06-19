@@ -1,0 +1,38 @@
+{
+  "folders": [
+    {
+      "name": "Platform Docs",
+      "path": "."
+    },
+    {
+      "name": "Backend IoT",
+      "path": "../backend"
+    },
+    {
+      "name": "Analytics IoT",
+      "path": "../b2b_analytics"
+    },
+    {
+      "name": "AppHub",
+      "path": "../AppHub"
+    },
+    {
+      "name": "KlabinDash",
+      "path": "../KlabinDash"
+    },
+    {
+      "name": "SinterDash",
+      "path": "../SinterDash"
+    },
+    {
+      "name": "SolarDash",
+      "path": "../SolarDash"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/node_modules": true,
+      "**/dist": true
+    }
+  }
+}

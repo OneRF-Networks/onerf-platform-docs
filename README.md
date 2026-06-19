@@ -54,9 +54,14 @@ Detalhe: [ECOSYSTEM.md](ECOSYSTEM.md).
 
 ## Consumo
 
-### Workspace Cursor (`git_onerf`)
+### Workspace Cursor (recomendado)
 
-Inclua esta pasta no multi-root workspace — ver [WORKSPACE.md](WORKSPACE.md) e `../onerf.code-workspace`.
+Clone os repos como **pastas irmãs** e abra [onerf.code-workspace](onerf.code-workspace) — guia completo em [WORKSPACE.md](WORKSPACE.md).
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\clone-workspace.ps1 -TargetDir C:\git_onerf
+# Cursor: Open Workspace from File → onerf-platform-docs\onerf.code-workspace
+```
 
 | De | Caminho para este repo |
 |----|------------------------|

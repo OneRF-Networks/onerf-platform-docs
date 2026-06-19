@@ -1,35 +1,64 @@
-# Workspace Cursor — monorepo `git_onerf`
+# Workspace Cursor — monorepo OneRF
 
-Como abrir e navegar o ecossistema OneRF no editor.
+Como clonar e abrir **todos** os repos no Cursor com links de documentação a funcionar.
+
+**Ficheiro workspace (versionado):** [onerf.code-workspace](onerf.code-workspace) — paths relativos a pastas **irmãs**.
 
 ---
 
 ## Layout esperado
 
 ```
-c:\git_onerf\
-├── onerf-platform-docs\    ← documentação transversal (SSOT)
-├── backend\                ← Backend IoT
-├── b2b_analytics\          ← Analytics IoT
-├── AppHub\
-├── KlabinDash\
-├── SinterDash\
-├── SolarDash\
-└── onerf.code-workspace    ← ficheiro opcional (reabrir tudo de uma vez)
+git_onerf/                    ← pasta pai (nome à sua escolha)
+├── onerf-platform-docs/      ← este repo (SSOT + onerf.code-workspace)
+├── backend/
+├── b2b_analytics/
+├── AppHub/
+├── KlabinDash/
+├── SinterDash/
+└── SolarDash/
 ```
 
 ---
 
-## Abrir no Cursor
+## Setup rápido
 
-**Opção A — ficheiro workspace (recomendado)**
+### 1. Clonar repos irmãos
 
-1. `File → Open Workspace from File…`
-2. Selecionar `c:\git_onerf\onerf.code-workspace`
+**Script (Windows):**
 
-**Opção B — pastas manuais**
+```powershell
+cd onerf-platform-docs
+powershell -ExecutionPolicy Bypass -File .\scripts\clone-workspace.ps1 -TargetDir C:\git_onerf
+```
 
-`File → Add Folder to Workspace…` — incluir **todas** as pastas acima, em especial `onerf-platform-docs`.
+**Manual:**
+
+```powershell
+mkdir C:\git_onerf
+cd C:\git_onerf
+git clone https://github.com/OneRF-Networks/onerf-platform-docs.git
+git clone https://github.com/OneRF-Networks/backend.git
+git clone https://github.com/OneRF-Networks/b2b_analytics.git
+git clone https://github.com/OneRF-Networks/AppHub.git
+git clone https://github.com/OneRF-Networks/KlabinDash.git
+git clone https://github.com/OneRF-Networks/SinterDash.git
+git clone https://github.com/OneRF-Networks/SolarDash.git
+```
+
+### 2. Abrir no Cursor
+
+`File → Open Workspace from File…` →
+
+```
+C:\git_onerf\onerf-platform-docs\onerf.code-workspace
+```
+
+Aparecem 7 roots: **Platform Docs**, Backend IoT, Analytics IoT, HUB APPs.
+
+### 3. Alternativa — pastas manuais
+
+`File → Add Folder to Workspace…` — adicionar cada repo; incluir sempre `onerf-platform-docs`.
 
 ---
 
@@ -37,24 +66,17 @@ c:\git_onerf\
 
 | Objetivo | Abrir |
 |----------|--------|
-| Visão do ecossistema | `onerf-platform-docs/ECOSYSTEM.md` |
-| Normas HTTP / UX / auth | `onerf-platform-docs/platform/` |
-| Trabalhar no Backend IoT | `backend/docs/README.md` |
-| Trabalhar no Analytics IoT | `b2b_analytics/docs/ENGINEERING.md` |
-| HUB APP segmentada | `onerf-platform-docs/products/hub-apps/README.md` |
+| Visão do ecossistema | `ECOSYSTEM.md` |
+| Normas HTTP / UX / auth | `platform/` |
+| Backend IoT | `../backend/docs/README.md` |
+| Analytics IoT | `../b2b_analytics/docs/ENGINEERING.md` |
+| HUB APPs | `products/hub-apps/README.md` |
 
 ---
 
 ## Links entre repos
 
-Com todas as pastas no workspace, links relativos do tipo `../../onerf-platform-docs/...` (a partir de `docs/` num repo) **funcionam** no preview Markdown e na navegação do IDE.
-
-Clone isolado de um só repo: usar [GitHub](https://github.com/OneRF-Networks/onerf-platform-docs) ou clonar `onerf-platform-docs` como irmão:
-
-```powershell
-cd c:\git_onerf
-git clone https://github.com/OneRF-Networks/onerf-platform-docs.git
-```
+Com o workspace aberto, links `../../onerf-platform-docs/...` nos `docs/` dos outros repos resolvem no IDE.
 
 ---
 
