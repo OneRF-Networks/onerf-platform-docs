@@ -22,6 +22,7 @@ Detalhe: [ECOSYSTEM.md](ECOSYSTEM.md).
 
 | Perfil | Leia primeiro |
 |--------|----------------|
+| **Novo no time** | **[TEAM_ONBOARDING.md](TEAM_ONBOARDING.md)** |
 | **Configurar workspace** | [WORKSPACE.md](WORKSPACE.md) |
 | Liderança / arquitetura | [ECOSYSTEM.md](ECOSYSTEM.md) → [platform/PLATFORM_VISION.md](platform/PLATFORM_VISION.md) |
 | Novo dev | ECOSYSTEM → produto do seu repo em [products/](products/) |
