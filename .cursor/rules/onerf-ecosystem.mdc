@@ -1,5 +1,5 @@
 ---
-description: Contexto do ecossistema OneRF — docs centralizadas e links por produto
+description: Contexto do ecossistema OneRF — SSOT deste repositório
 alwaysApply: true
 ---
 
@@ -7,24 +7,26 @@ alwaysApply: true
 
 **Modelo de produto:** Backend IoT + Analytics IoT (plataformas **transversais**) + HUB APPs (apps **segmentadas**).
 
-Antes de implementar ou rever código em **qualquer** repo OneRF:
+Este repositório (`onerf-platform-docs`) é a **fonte canónica**. No workspace multi-root `git_onerf`, aparece como pasta irmã dos repos de produto.
 
-1. **Docs comuns (SSOT):** [onerf-platform-docs/README.md](../../onerf-platform-docs/README.md)
-2. **Ecossistema:** [ECOSYSTEM.md](../../onerf-platform-docs/ECOSYSTEM.md)
-3. **Visão estruturante:** [platform/PLATFORM_VISION.md](../../onerf-platform-docs/platform/PLATFORM_VISION.md)
+## Entrada
 
-## Por repositório
+1. [README.md](../../README.md)
+2. [ECOSYSTEM.md](../../ECOSYSTEM.md)
+3. [platform/PLATFORM_VISION.md](../../platform/PLATFORM_VISION.md)
 
-| Camada | Repo | Índice |
-|--------|------|--------|
-| Backend IoT (transversal) | `backend` | [products/backend-iot/README.md](../../onerf-platform-docs/products/backend-iot/README.md) |
-| Analytics IoT (transversal) | `b2b_analytics` | [products/analytics/README.md](../../onerf-platform-docs/products/analytics/README.md) |
-| HUB APPs (segmento) | KlabinDash, SinterDash, SolarDash, AppHub | [products/hub-apps/README.md](../../onerf-platform-docs/products/hub-apps/README.md) |
+## Índices por produto
+
+| Camada | Pasta workspace | Índice |
+|--------|-----------------|--------|
+| Backend IoT | `backend` | [products/backend-iot/README.md](../../products/backend-iot/README.md) |
+| Analytics IoT | `b2b_analytics` | [products/analytics/README.md](../../products/analytics/README.md) |
+| HUB APPs | `AppHub`, `KlabinDash`, … | [products/hub-apps/README.md](../../products/hub-apps/README.md) |
 
 ## Regras
 
-- Backend IoT e Analytics IoT são **transversais** — evitar regras de um segmento no core.
-- HUB APPs são **finas** — consomem API das plataformas; metadado de segmento no repo da app.
-- Contrato HTTP: [platform/API_CONTRACT.md](../../onerf-platform-docs/platform/API_CONTRACT.md).
-- Integração plataformas: [platform/INTEGRATION_PATTERNS.md](../../onerf-platform-docs/platform/INTEGRATION_PATTERNS.md).
-- ADR-001: sem MQTT inter-sistema.
+- Normas transversais → PR **neste repo**.
+- OpenAPI vivo e refactor → PR no repo do produto.
+- Contrato HTTP: [platform/API_CONTRACT.md](../../platform/API_CONTRACT.md)
+- Integração plataformas: [platform/INTEGRATION_PATTERNS.md](../../platform/INTEGRATION_PATTERNS.md)
+- ADR-001: [adr/001-no-mqtt-inter-system.md](../../adr/001-no-mqtt-inter-system.md)

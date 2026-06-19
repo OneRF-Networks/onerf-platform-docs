@@ -22,6 +22,7 @@ Detalhe: [ECOSYSTEM.md](ECOSYSTEM.md).
 
 | Perfil | Leia primeiro |
 |--------|----------------|
+| **Configurar workspace** | [WORKSPACE.md](WORKSPACE.md) |
 | Liderança / arquitetura | [ECOSYSTEM.md](ECOSYSTEM.md) → [platform/PLATFORM_VISION.md](platform/PLATFORM_VISION.md) |
 | Novo dev | ECOSYSTEM → produto do seu repo em [products/](products/) |
 | Frontend B2B (Analytics IoT) | [platform/UI_NAVIGATION.md](platform/UI_NAVIGATION.md) |
@@ -53,9 +54,18 @@ Detalhe: [ECOSYSTEM.md](ECOSYSTEM.md).
 
 ## Consumo
 
-**Monorepo local:** `../../onerf-platform-docs/` a partir de qualquer repo irmão.
+### Workspace Cursor (`git_onerf`)
 
-**GitHub:** https://github.com/OneRF-Networks/onerf-platform-docs
+Inclua esta pasta no multi-root workspace — ver [WORKSPACE.md](WORKSPACE.md) e `../onerf.code-workspace`.
+
+| De | Caminho para este repo |
+|----|------------------------|
+| Raiz de repo irmão (ex. `backend/`) | `../onerf-platform-docs/` |
+| `docs/` de repo irmão | `../../onerf-platform-docs/` |
+
+### GitHub (clone isolado)
+
+https://github.com/OneRF-Networks/onerf-platform-docs
 
 ---
 
