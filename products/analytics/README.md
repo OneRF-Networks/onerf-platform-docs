@@ -24,7 +24,7 @@ Inventário canônico multi-org, Influx, dashboards configuráveis, ocorrências
 |-----------|----------|
 | [docs/ENGINEERING.md](../../../b2b_analytics/docs/ENGINEERING.md) | Índice operacional |
 | [docs/ARCHITECTURE_TARGET.md](../../../b2b_analytics/docs/ARCHITECTURE_TARGET.md) | C4, HTTP, camadas |
-| [docs/UI_NAVIGATION.md](../../../b2b_analytics/docs/UI_NAVIGATION.md) | Catálogo de telas (§5) |
+| [docs/UI_NAVIGATION.md](../../../b2b_analytics/docs/UI_NAVIGATION.md) | Catálogo de telas Analytics IoT (norma UX → platform/UI_NAVIGATION) |
 | [openapi.yaml](../../../b2b_analytics/openapi.yaml) | OpenAPI vivo |
 
 ---
