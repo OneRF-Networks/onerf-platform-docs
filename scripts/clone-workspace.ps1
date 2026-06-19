@@ -6,12 +6,11 @@ param(
     [string]$TargetDir = (Join-Path (Split-Path $PSScriptRoot -Parent) '..')
 )
 
-$TargetDir = (Join-Path (Split-Path $PSScriptRoot -Parent) '..')
-}
-
 try {
     $TargetDir = (Resolve-Path -LiteralPath $TargetDir).Path
 } catch {
+    $TargetDir = Join-Path $env:USERPROFILE 'git_onerf'
+}
 
 $org = 'OneRF-Networks'
 $repos = @(
