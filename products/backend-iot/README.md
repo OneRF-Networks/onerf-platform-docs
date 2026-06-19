@@ -1,9 +1,20 @@
 # Backend IoT (`onerf_appapi`)
 
-Headend OneRF — conectividade de campo, gateways, endpoints, protocolos (CoAP, MQTT na borda), API MDC, jobs, publicação de telemetria.
+**Plataforma transversal** de gestão de **conectividade e dispositivos** IoT — atende **todos os segmentos** (utilities, industrial, solar, papel, …).
+
+Gateways, endpoints, protocolos de campo (CoAP, MQTT na borda), leituras, OTA, API MDC, publicação de telemetria para o Analytics IoT e consumo por HUB APPs.
 
 **Repo:** [backend/](../../../backend/)  
-**Documentação comum:** [README.md](../../README.md)
+**Ecossistema:** [ECOSYSTEM.md](../../ECOSYSTEM.md)
+
+---
+
+## Relação com outras camadas
+
+| Camada | Relação |
+|--------|---------|
+| **Analytics IoT** | Recebe pull de metadados + push de leituras ([INTEGRATION_PATTERNS](../../platform/INTEGRATION_PATTERNS.md)) |
+| **HUB APPs** | Consomem `GET /api/v1/*` via JWT — **não** duplicam conectividade |
 
 ---
 
@@ -12,28 +23,18 @@ Headend OneRF — conectividade de campo, gateways, endpoints, protocolos (CoAP,
 | Documento | Conteúdo |
 |-----------|----------|
 | [docs/README.md](../../../backend/docs/README.md) | Índice canónico |
-| [context.md](../../../backend/context.md) | Contexto operacional (código actual) |
-| [docs/ARCHITECTURE_TARGET.md](../../../backend/docs/ARCHITECTURE_TARGET.md) | Arquitetura alvo técnica |
-| [docs/REFACTOR_BREAKING.md](../../../backend/docs/REFACTOR_BREAKING.md) | Plano de refactor (fases 0–6) |
-| [docs/INTEGRATION_ANALYTICS.md](../../../backend/docs/INTEGRATION_ANALYTICS.md) | Contrato pull/push com Analytics |
-| [docs/Guia_de_Padronizacao_de_API_v1.md](../../../backend/docs/Guia_de_Padronizacao_de_API_v1.md) | Guia API v1 (IoT) |
+| [context.md](../../../backend/context.md) | Código actual |
+| [docs/ARCHITECTURE_TARGET.md](../../../backend/docs/ARCHITECTURE_TARGET.md) | Arquitetura alvo |
+| [docs/INTEGRATION_ANALYTICS.md](../../../backend/docs/INTEGRATION_ANALYTICS.md) | Contrato com Analytics IoT |
 | [openapi.yaml](../../../backend/openapi.yaml) | OpenAPI vivo |
 
 ---
 
-## Plataforma (docs centralizadas)
+## Normas comuns
 
 | Tema | Link |
 |------|------|
-| Ecossistema | [ECOSYSTEM.md](../../ECOSYSTEM.md) |
-| Visão B2B | [platform/PLATFORM_VISION.md](../../platform/PLATFORM_VISION.md) |
+| Visão ecossistema | [platform/PLATFORM_VISION.md](../../platform/PLATFORM_VISION.md) |
 | Contrato HTTP | [platform/API_CONTRACT.md](../../platform/API_CONTRACT.md) |
-| Integração inter-sistema | [platform/INTEGRATION_PATTERNS.md](../../platform/INTEGRATION_PATTERNS.md) |
-
----
-
-## Stack (resumo)
-
-Node.js, Express, MongoDB, Agenda (→ BullMQ alvo), Passport, CoAP, MQTT (borda), EJS (UI legada).
 
 **Tronco refactor:** `refactor/main`

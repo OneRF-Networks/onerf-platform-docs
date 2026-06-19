@@ -63,7 +63,7 @@ flowchart TB
 - `POST /token` ou client credentials OIDC → JWT app.
 - Rotas `/api/v1` aceitam `Authorization: Bearer` — fluxo **separado** do login humano.
 
-**Apps verticais** (KlabinDash, SinterDash, …) usam tipicamente JWT M2M com token em `localStorage` — padrão transitório até SSO unificado.
+**Apps verticais (legado):** ver [HUB APPs](../../onerf-platform-docs/products/hub-apps/README.md) — KlabinDash, SinterDash, SolarDash consomem tipicamente JWT M2M com token em `localStorage` — padrão transitório até SSO unificado.
 
 ---
 

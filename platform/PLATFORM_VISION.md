@@ -1,36 +1,60 @@
-# OneRF B2B Platform — visão estruturante
+# OneRF — visão estruturante
 
-*Padrão multi-org para aplicações B2B OneRF.*
+Documento **estruturante** do ecossistema OneRF: **plataformas transversais**, **HUB APPs segmentadas** e **padrão técnico B2B** (entrega multi-org). Não é manual de operação nem guia de deploy.
 
-Documento **estruturante**: define o **padrão de plataforma** reutilizável e onde cada **produto** se encaixa. Não é manual de operação, guia de deploy nem documentação de regras operacionais de módulos.
-
-**Implementação de referência:** repositório `b2b_analytics` — ver [products/analytics/README.md](../products/analytics/README.md).
-
+**Ecossistema (diagramas):** [ECOSYSTEM.md](../ECOSYSTEM.md)  
 **Público:** liderança de software, arquitetos e devs que definem o **alvo** antes da execução.
-
-**Ecossistema:** [ECOSYSTEM.md](../ECOSYSTEM.md) · **Detalhe técnico de implementação:** [b2b_analytics/docs/ARCHITECTURE_TARGET.md](../../../b2b_analytics/docs/ARCHITECTURE_TARGET.md).
 
 ---
 
-## 1. Terminologia
+## 1. Terminologia — produtos do ecossistema
 
 | Termo | Significado |
 |-------|-------------|
-| **OneRF B2B Platform** | Padrão de entrega para apps B2B multi-tenant OneRF — identity, contrato HTTP, shell SPA, runtime assíncrono. **Não** é pasta, pacote npm nem repo copiável. |
-| **Shared module** | Bounded context reutilizável entre produtos OneRF (ex.: ocorrências). Vive em `backend/modules/<nome>/`. |
-| **Product** | Core domain **de um repositório** — ex.: inventário analítico no Analytics; gateways/endpoints no Backend IoT. |
-| **`application` (camada)** | Use cases em `backend/application/` — **não** confundir com “Product”. |
-| **`base/` (pasta)** | Legado transitório do refactor Analytics. Mencionar **só** ao descrever código actual; absorver em `backend/modules/identity/`. |
+| **Backend IoT** | Plataforma **transversal** de gestão de **conectividade e dispositivos** IoT — gateways, endpoints, protocolos de campo, MDC, OTA. Repo: `onerf_appapi`. |
+| **Analytics IoT** | Plataforma **transversal** de **análise de dados IoT genérica** — inventário canônico, Influx, dashboards configuráveis, ocorrências, multi-org. Repo: `b2b_analytics`. |
+| **HUB APPs** | Conjuntos de **dashboards e análises simples** para um **segmento/aplicação** específico (ex.: KlabinDash, SinterDash, SolarDash). **Não** são transversais. |
+| **OneRF B2B Platform** | Padrão **técnico** de entrega multi-org (identity, HTTP, shell SPA, jobs) — aplicado sobretudo no Analytics IoT; referência para evolução do Backend IoT. **Não** é um repo. |
+| **Shared module** | Bounded context reutilizável (ex.: ocorrências) dentro de um monorepo de plataforma. |
+| **`application` (camada)** | Use cases — **não** confundir com produto de ecossistema. |
 
-**Regra:** recursos de plataforma e shared modules são **módulos e convenções dentro do monorepo de cada produto**; o produto Analytics ocupa `backend/domain`, `backend/application` e rotas `api_*` de domínio analítico.
+**Regra:** Backend IoT e Analytics IoT servem **todos os segmentos**; HUB APPs consomem-nas por API e acrescentam UX/regras **do segmento**.
 
 ---
 
-## 2. Modelo em três camadas
+## 2. Modelo em três camadas de produto
 
 ```mermaid
 flowchart TB
-  subgraph platform [OneRF B2B Platform — padrão multi-org]
+  subgraph p1 [Backend_IoT — transversal]
+    CONN[Conectividade_dispositivos]
+  end
+  subgraph p2 [Analytics_IoT — transversal]
+    AN[Analise_dados_generica]
+  end
+  subgraph p3 [HUB_APPs — segmento]
+    HUB[KlabinDash_SinterDash_SolarDash]
+  end
+  p1 -->|telemetria| p2
+  p1 -->|api| p3
+  p2 -.->|opcional| p3
+```
+
+| Camada | Repo | Documentação |
+|--------|------|--------------|
+| Backend IoT | [backend/](../../../backend/) | [products/backend-iot/README.md](../products/backend-iot/README.md) |
+| Analytics IoT | [b2b_analytics/](../../../b2b_analytics/) | [products/analytics/README.md](../products/analytics/README.md) |
+| HUB APPs | KlabinDash, SinterDash, SolarDash, AppHub | [products/hub-apps/README.md](../products/hub-apps/README.md) |
+
+---
+
+## 3. Padrão técnico B2B *(OneRF B2B Platform)*
+
+Capacidades de **entrega** que o Analytics IoT materializa (e que outras apps B2B OneRF devem seguir ou convergir):
+
+```mermaid
+flowchart TB
+  subgraph platform [Padrão_B2B — dentro do Analytics_IoT]
     ID[Identity e tenancy]
     API[Contrato HTTP e shell SPA]
     RUN[Job runtime e realtime]
@@ -38,120 +62,73 @@ flowchart TB
   subgraph shared [Shared modules]
     OCC[Ocorrências]
   end
-  subgraph product [Product — exemplo Analytics]
+  subgraph domain [Domínio Analytics_IoT]
     CORE[Inventário medições dashboards integrações]
   end
   platform --> shared
-  platform --> product
-  shared --> product
+  platform --> domain
+  shared --> domain
 ```
-
-### 2.1 OneRF B2B Platform *(padrão multi-org)*
-
-Capacidades que **qualquer** app B2B OneRF de referência deve oferecer ou seguir:
-
-| Área | O que inclui | Local alvo | Documentação |
-|------|--------------|------------|--------------|
-| **Tenancy e identidade** | users, orgs, `current_org`, perfil, ACL, OIDC multi-IdP, sessão BFF, JWT M2M | `backend/modules/identity/` | [AUTH_OIDC.md](AUTH_OIDC.md) |
-| **Contrato HTTP** | `/api/v1`, erros JSON, **camelCase**, OpenAPI, `ListResponse` | `backend/http`, `backend/routes`, `presenter/` | [API_CONTRACT.md](API_CONTRACT.md) |
-| **Shell SPA** | layout, auth provider, rotas públicas, login (alvo), `auth/session` | `frontend/src/app/`, `frontend/src/components/` | [UI_NAVIGATION.md](UI_NAVIGATION.md) |
-| **UX transversal** | lista × detalhe, listas server-side | shell + UI_NAVIGATION | UI_NAVIGATION |
-| **Runtime assíncrono** | BullMQ, Redis, API `/api/v1/jobs`, workers | `backend/infra` | ARCHITECTURE_TARGET §9 (Analytics) |
-| **Tempo real (transporte)** | Socket.IO, adapter Redis | `backend/infra` | ARCHITECTURE_TARGET §9 |
-
-Novas capacidades de plataforma entram como **convenções** ou, quando forem módulos encapsulados, em `backend/modules/` apenas se forem claramente transversais (ex.: identity).
-
-### 2.2 Shared modules
-
-Domínios **empacotados para reutilizar** entre produtos OneRF — nem todo app precisa de todos:
-
-| Módulo | Responsabilidade | Local alvo | Documentação |
-|--------|------------------|------------|--------------|
-| **Ocorrências** | Eventos operacionais, SLA, dedupe, notificações | `backend/modules/occurrences/` | [b2b_analytics/docs/OCCURRENCES_PLAN.md](../../../b2b_analytics/docs/OCCURRENCES_PLAN.md) |
-
-Regras de **produto/operador** de um shared module ficam no plano do módulo — não neste documento.
-
-### 2.3 Product — Analytics *(exemplo principal)*
-
-Capacidades que definem o **hub analítico IoT** — não são obrigatórias em outros apps OneRF:
 
 | Área | O que inclui | Documentação |
 |------|--------------|--------------|
-| **Inventário** | sensores, planos, unidades, tags multi-org | [products/analytics/README.md](../products/analytics/README.md) |
-| **Medições** | Influx, séries, gaps, agregações | ARCHITECTURE_TARGET §10 |
-| **Dashboards** | custom dashboards, home, analytics, mapas | UI_NAVIGATION §5 (catálogo Analytics) |
-| **Integrações analíticas** | MDC, SQS, importações | [INTEGRATION_PATTERNS.md](INTEGRATION_PATTERNS.md) |
+| Tenancy e identidade | users, orgs, ACL, OIDC, sessão BFF, JWT M2M | [AUTH_OIDC.md](AUTH_OIDC.md) |
+| Contrato HTTP | `/api/v1`, camelCase, OpenAPI, `ListResponse` | [API_CONTRACT.md](API_CONTRACT.md) |
+| Shell SPA | layout, auth, lista × detalhe | [UI_NAVIGATION.md](UI_NAVIGATION.md) |
+| Runtime assíncrono | BullMQ, Redis, Socket.IO | [ARCHITECTURE_TARGET §9](../../../b2b_analytics/docs/ARCHITECTURE_TARGET.md) |
+| Ocorrências (shared) | eventos operacionais, SLA | [OCCURRENCES_PLAN](../../../b2b_analytics/docs/OCCURRENCES_PLAN.md) |
+| Domínio Analytics IoT | sensores, Influx, dashboards genéricos, MDC/SQS | [products/analytics/README.md](../products/analytics/README.md) |
 
-**Posicionamento:** hub multi-tenant para **operar e analisar** telemetria e metadados; **não** substitui conectividade IoT na borda. Sistemas de campo (`onerf_appapi`) **publicam** para o hub via HTTP/SQS — ver INTEGRATION_PATTERNS.
-
-**Tipos de job** = produto; **fila/worker BullMQ** = plataforma (§2.1).
-
----
-
-## 3. Princípios da plataforma
-
-1. **Multi-org na sessão** — `currentOrg` na sessão app; ACL e filtros respeitam a org activa.
-2. **API-first** — operações em `/api/v1`; contrato OpenAPI por serviço; breaking change só com nova versão major.
-3. **SPA única** — React no mesmo host; sem EJS de negócio, sem Webpack legado, sem `window.__GLOBALS__`.
-4. **Camadas explícitas** — `domain` → `application` → `infra`; rotas HTTP finas.
-5. **Autenticação OIDC federada** — multi-IdP + sessão BFF + `GET /api/v1/auth/session`; JWT M2M separado. Detalhe: [AUTH_OIDC.md](AUTH_OIDC.md).
-6. **Identidade encapsulada** — `backend/modules/identity/`.
-7. **Jobs em BullMQ** — Redis; Agenda descontinuada.
-8. **Tempo real via Socket.IO** — adapter Redis para escala horizontal.
-9. **Navegação previsível** — lista × detalhe em rotas separadas ([UI_NAVIGATION.md](UI_NAVIGATION.md)).
-10. **Listas server-side** — envelope `ListResponse` em índices.
-11. **JSON camelCase** em `/api/v1`. Detalhe: [API_CONTRACT.md](API_CONTRACT.md).
-12. **Segredos fora do Git** — `.env` para credenciais.
-13. **Sem MQTT inter-sistema** — HTTP/SQS/Redis entre apps OneRF. Detalhe: [INTEGRATION_PATTERNS.md](INTEGRATION_PATTERNS.md), [ADR-001](../adr/001-no-mqtt-inter-system.md).
+**Implementação de referência do padrão B2B:** repositório `b2b_analytics`.
 
 ---
 
-## 4. Camadas técnicas (ortogonal às três camadas)
+## 4. HUB APPs vs plataformas
 
-| Camada | Papel | Pasta típica |
-|--------|-------|--------------|
-| Domain | regras e entidades | `backend/domain` ou `backend/modules/*` |
-| Application | use cases, event handlers | `backend/application` |
-| Infrastructure | HTTP, Mongo, Influx, Redis, AWS | `backend/infra`, `backend/routes`, `backend/http` |
+| | Plataforma transversal | HUB APP |
+|--|------------------------|---------|
+| **Backend IoT** | Inventário e conectividade de **qualquer** dispositivo | Escolhe endpoints/canais **do segmento** |
+| **Analytics IoT** | Dashboards e séries **genéricos**, multi-org | Painéis **fixos** e metadado local (estufas, linhas, …) |
+| **Evitar** | Regras de um único cliente no core | Reimplementar MDC, Influx ou mesh no app |
 
 ---
 
-## 5. Decisões estruturantes fechadas
+## 5. Princípios do ecossistema
 
-Não reabrir em grooming — detalhe nos documentos linkados e ADRs.
+1. **Duas plataformas transversais** — Backend IoT (conectividade) + Analytics IoT (análise); segmentos não forkam estas bases.
+2. **HUB APPs finas** — consomem API; metadado de segmento no repo da app.
+3. **Multi-org** (Analytics IoT) — `currentOrg` na sessão; ACL no app.
+4. **API-first** — `/api/v1`; OpenAPI por serviço.
+5. **Sem MQTT inter-sistema** — Backend ↔ Analytics via HTTP/SQS/Redis ([INTEGRATION_PATTERNS.md](INTEGRATION_PATTERNS.md), [ADR-001](../adr/001-no-mqtt-inter-system.md)).
+6. **JSON camelCase** em `/api/v1` ([API_CONTRACT.md](API_CONTRACT.md)).
+7. **Segredos fora do Git**.
+
+---
+
+## 6. Decisões estruturantes fechadas
 
 | Decisão | Documento |
 |---------|-----------|
-| Autenticação OIDC | [AUTH_OIDC.md](AUTH_OIDC.md) |
-| Contrato JSON camelCase | [API_CONTRACT.md](API_CONTRACT.md) |
-| Integração inter-sistema (sem MQTT) | [INTEGRATION_PATTERNS.md](INTEGRATION_PATTERNS.md) · [ADR-001](../adr/001-no-mqtt-inter-system.md) |
+| Autenticação OIDC (Analytics IoT / B2B) | [AUTH_OIDC.md](AUTH_OIDC.md) |
+| Contrato JSON | [API_CONTRACT.md](API_CONTRACT.md) |
+| Integração inter-sistema | [INTEGRATION_PATTERNS.md](INTEGRATION_PATTERNS.md) · [ADR-001](../adr/001-no-mqtt-inter-system.md) |
 | UX lista × detalhe | [UI_NAVIGATION.md](UI_NAVIGATION.md) |
 
 ---
 
-## 6. Mapa de documentação
-
-### Plataforma (este repo)
+## 7. Mapa de documentação
 
 | Documento | Conteúdo |
 |-----------|----------|
-| [README.md](../README.md) | Índice de entrada |
-| **Este arquivo** | Taxonomia Platform / Shared / Product |
-| [ECOSYSTEM.md](../ECOSYSTEM.md) | Backend × Analytics × apps verticais |
-| [UI_NAVIGATION.md](UI_NAVIGATION.md) | Convenções shell SPA |
-| [API_CONTRACT.md](API_CONTRACT.md) | Contrato HTTP normativo |
-| [AUTH_OIDC.md](AUTH_OIDC.md) | Auth humana e M2M |
-| [INTEGRATION_PATTERNS.md](INTEGRATION_PATTERNS.md) | Mensageria entre produtos |
-| [adr/](../adr/) | ADRs numerados |
-
-### Por produto (repos satélite)
-
-| Produto | Índice |
-|---------|--------|
-| Backend IoT | [products/backend-iot/README.md](../products/backend-iot/README.md) |
-| Analytics | [products/analytics/README.md](../products/analytics/README.md) |
-| Apps verticais | [products/vertical-apps/README.md](../products/vertical-apps/README.md) |
+| [README.md](../README.md) | Índice |
+| [ECOSYSTEM.md](../ECOSYSTEM.md) | Backend IoT × Analytics IoT × HUB APPs |
+| **Este arquivo** | Terminologia, camadas de produto, padrão B2B |
+| [products/backend-iot/](../products/backend-iot/README.md) | Plataforma conectividade |
+| [products/analytics/](../products/analytics/README.md) | Plataforma análise |
+| [products/hub-apps/](../products/hub-apps/README.md) | Apps segmentadas |
+| [platform/](.) | Contratos transversais (HTTP, auth, UX, integração) |
+| [adr/](../adr/) | ADRs |
 
 ---
 
-*Última actualização: jun/2026 — fonte canónica em `onerf-platform-docs`; migrado de `b2b_analytics/docs/PLATFORM_VISION.md`.*
+*Última actualização: jun/2026 — Backend IoT + Analytics IoT (transversais) + HUB APPs (segmento).*

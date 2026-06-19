@@ -1,9 +1,9 @@
 # Integração inter-sistema
 
-Padrões de comunicação **entre produtos OneRF** (Backend IoT, Analytics, workers, filas).
+Padrões de comunicação entre **plataformas transversais** (Backend IoT, Analytics IoT) e **HUB APPs**.
 
 **Decisão fechada:** [ADR-001](../adr/001-no-mqtt-inter-system.md)  
-**Contrato concreto Backend ↔ Analytics:** [backend/docs/INTEGRATION_ANALYTICS.md](../../../backend/docs/INTEGRATION_ANALYTICS.md)
+**Contrato Backend IoT ↔ Analytics IoT:** [backend/docs/INTEGRATION_ANALYTICS.md](../../../backend/docs/INTEGRATION_ANALYTICS.md)
 
 ---
 
@@ -12,51 +12,48 @@ Padrões de comunicação **entre produtos OneRF** (Backend IoT, Analytics, work
 | Camada | Protocolos |
 |--------|------------|
 | **Borda IoT (campo)** | CoAP, UDP, TCP, MQTT — termina no **Backend IoT** |
-| **Entre apps OneRF** | **HTTP**, **SQS**, **Redis** (filas JSON camelCase) |
-| **Proibido como barramento** | MQTT entre Backend ↔ Analytics |
-
-MQTT na borda alimenta gateways e dispositivos; **não** é barramento de integração entre monólitos/serviços de aplicação.
+| **Entre plataformas / apps** | **HTTP**, **SQS**, **Redis** (JSON camelCase) |
+| **Proibido como barramento** | MQTT entre Backend IoT ↔ Analytics IoT |
 
 ---
 
-## 2. Backend IoT → Hub Analytics
+## 2. Backend IoT → Analytics IoT
 
 | Direção | Mecanismo | Conteúdo |
 |---------|-----------|----------|
 | **Pull metadados** | HTTP `GET /api/v1/endpoints` (job batch no Analytics) | Discover/register/sync sensores |
-| **Push leituras** | HTTP interno, fila Redis ou SQS AWS | Medições event-driven |
-| **Identidade** | `sourceDeviceId` = ObjectId do endpoint no backend | Hub resolve sensor por par `integrationId` + `sourceDeviceId` |
-
-**Velocidades:**
-
-- Metadados: pull batch (periodicidade configurável).
-- Leituras: push event-driven (baixa latência).
+| **Push leituras** | HTTP, fila Redis ou SQS | Medições event-driven |
+| **Identidade** | `sourceDeviceId` = ObjectId do endpoint no Backend IoT | Hub resolve por `integrationId` + `sourceDeviceId` |
 
 ---
 
-## 3. Payload canónico (leituras)
+## 3. HUB APPs → plataformas
 
-- JSON **camelCase**.
-- Backend publica id do **endpoint** (campo), não `_id` do sensor no hub.
-- MQTT subscriber legado no Analytics → **descontinuado** (sunset com publisher canônico no backend).
+| HUB APP | Plataforma | Padrão |
+|---------|------------|--------|
+| KlabinDash, SinterDash, SolarDash | **Backend IoT** (primário) | `POST /token` → JWT → `GET /api/v1/*` |
+| (opcional) | **Analytics IoT** | API REST quando inventário/séries do hub forem necessários |
+
+HUB APPs **não** publicam telemetria nem gerem mesh — delegam às plataformas transversais.
 
 ---
 
-## 4. Outros consumidores
+## 4. Outros consumidores do Backend IoT
 
 | Consumidor | Integração |
 |------------|------------|
-| Dashboards verticais | JWT `POST /token` → `GET /api/v1/*` no Backend IoT |
-| Clientes (Enel, CPFL) | Jobs + exportações SGE (Backend IoT) |
-| MDC / automação | API REST `/api/v1` |
+| Operadores OneRF | UI operacional, sessão HTTP |
+| Clientes (Enel, CPFL) | Jobs + exportações |
+| MDC / automação | `/api/v1` REST |
 
 ---
 
 ## 5. Tempo real na UI
 
-- **Socket.IO** (+ adapter Redis) para notificações browser — plataforma.
-- **Não** MQTT para UI nem para integração inter-sistema.
+- **Analytics IoT:** Socket.IO (+ Redis adapter).
+- **HUB APPs:** polling ou fetch periódico à API Backend IoT (padrão actual).
+- **Não** MQTT para UI nem integração inter-sistema.
 
 ---
 
-*Última actualização: jun/2026 — migrado de PLATFORM_VISION §8.3 e ECOSYSTEM §4.*
+*Última actualização: jun/2026.*
