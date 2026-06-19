@@ -2,7 +2,7 @@
 
 Convenção de **UX transversal** da [OneRF B2B Platform](PLATFORM_VISION.md) (shell SPA): como o usuário passa da **lista** ao **detalhe** (criar, editar, visualizar).
 
-**Escopo:** norma **platform** — válida em qualquer app B2B OneRF. Catálogos de telas por produto ficam nos repos respectivos (ex.: `b2b_analytics/docs/UI_NAVIGATION.md` §5).
+**Escopo:** norma **platform** — válida em qualquer app B2B OneRF. Catálogo de telas por produto: ex. [b2b_analytics/docs/UI_NAVIGATION.md](../../../b2b_analytics/docs/UI_NAVIGATION.md) (Analytics IoT).
 
 Relacionado: [API_CONTRACT.md](API_CONTRACT.md) (`ListResponse`).
 
