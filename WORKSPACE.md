@@ -56,6 +56,8 @@ C:\git_onerf\onerf-platform-docs\onerf.code-workspace
 
 Aparecem 7 roots: **Platform Docs**, Backend IoT, Analytics IoT, HUB APPs.
 
+Onboarding completo: [TEAM_ONBOARDING.md](TEAM_ONBOARDING.md).
+
 ### 3. Alternativa — pastas manuais
 
 `File → Add Folder to Workspace…` — adicionar cada repo; incluir sempre `onerf-platform-docs`.
