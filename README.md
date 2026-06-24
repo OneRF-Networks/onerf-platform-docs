@@ -48,6 +48,7 @@ Detalhe: [ECOSYSTEM.md](ECOSYSTEM.md).
 |------|------------|
 | **Ecossistema** | [ECOSYSTEM.md](ECOSYSTEM.md), [platform/PLATFORM_VISION.md](platform/PLATFORM_VISION.md) |
 | **Normas técnicas** | [platform/API_CONTRACT.md](platform/API_CONTRACT.md), [AUTH_OIDC.md](platform/AUTH_OIDC.md), [UI_NAVIGATION.md](platform/UI_NAVIGATION.md), [INTEGRATION_PATTERNS.md](platform/INTEGRATION_PATTERNS.md) |
+| **QA homolog Backend** | [products/backend-iot/QA_HOMOLOG.md](products/backend-iot/QA_HOMOLOG.md) → código em `backend/qa-toolkit/` |
 | **ADRs** | [adr/](adr/) |
 | **Por produto** | [products/](products/) |
 

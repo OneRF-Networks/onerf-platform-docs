@@ -27,6 +27,7 @@ Gateways, endpoints, protocolos de campo (CoAP, MQTT na borda), leituras, OTA, A
 | [docs/ARCHITECTURE_TARGET.md](../../../backend/docs/ARCHITECTURE_TARGET.md) | Arquitetura alvo |
 | [docs/INTEGRATION_ANALYTICS.md](../../../backend/docs/INTEGRATION_ANALYTICS.md) | Contrato com Analytics IoT |
 | [openapi.yaml](../../../backend/openapi.yaml) | OpenAPI vivo |
+| [QA homolog + qa-toolkit](QA_HOMOLOG.md) | Testes manuais, SharePoint, campanhas e-mail |
 
 ---
 
